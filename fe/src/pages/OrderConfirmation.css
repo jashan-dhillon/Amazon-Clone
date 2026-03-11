@@ -1,0 +1,122 @@
+.order-confirmation {
+    background: #eaeded;
+    min-height: calc(100vh - 100px);
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.confirmation-card {
+    background: #fff;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 650px;
+    width: 100%;
+}
+
+.confirmation-icon {
+    font-size: 52px;
+    color: #067d62;
+    margin-bottom: 10px;
+}
+
+.confirmation-title {
+    font-size: 24px;
+    font-weight: 400;
+    color: #0f1111;
+    margin-bottom: 6px;
+}
+
+.confirmation-subtitle {
+    font-size: 14px;
+    color: #565959;
+    margin-bottom: 20px;
+}
+
+.confirmation-details {
+    background: #f0f2f2;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 14px;
+    color: #0f1111;
+}
+
+.status-placed {
+    color: #067d62;
+    text-transform: capitalize;
+}
+
+.confirmation-items {
+    margin-bottom: 20px;
+}
+
+.confirmation-items h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #0f1111;
+}
+
+.conf-item {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.conf-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.conf-item p {
+    font-size: 14px;
+    color: #0f1111;
+}
+
+.conf-item span {
+    font-size: 12px;
+    color: #565959;
+}
+
+.confirmation-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.view-orders-btn {
+    padding: 10px 20px;
+    background: #ffd814;
+    border: 1px solid #fcd200;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #0f1111;
+    font-size: 14px;
+}
+
+.continue-shopping-btn {
+    padding: 10px 20px;
+    border: 1px solid #d5d9d9;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #0f1111;
+    font-size: 14px;
+    background: #fff;
+}
+
+.view-orders-btn:hover {
+    background: #f7ca00;
+}
+
+.continue-shopping-btn:hover {
+    background: #f7fafa;
+}

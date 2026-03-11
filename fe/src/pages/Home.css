@@ -1,0 +1,267 @@
+/* =============================================
+   HOME PAGE - Amazon homepage layout
+   ============================================= */
+
+.home {
+    background: #e3e6e6;
+    min-height: 100vh;
+}
+
+/* hero banner */
+.hero-banner {
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    background: linear-gradient(to bottom, transparent, #e3e6e6);
+    pointer-events: none;
+}
+
+/* banner arrows */
+.banner-arrow {
+    position: absolute;
+    top: 0;
+    bottom: 50%;
+    width: 50px;
+    background: none;
+    border: none;
+    color: #111;
+    font-size: 48px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.2s;
+}
+
+.banner-arrow:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.banner-arrow.left {
+    left: 0;
+}
+
+.banner-arrow.right {
+    right: 0;
+}
+
+/* banner dots */
+.banner-dots {
+    position: absolute;
+    bottom: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+}
+
+.banner-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+}
+
+.banner-dot.active {
+    background: #fff;
+}
+
+/* main content area */
+.home-content {
+    margin-top: -200px;
+    position: relative;
+    z-index: 2;
+    padding: 0 16px 30px;
+}
+
+/* category cards grid */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.category-card {
+    background: #fff;
+    padding: 20px;
+    text-decoration: none;
+    color: #0f1111;
+    display: flex;
+    flex-direction: column;
+}
+
+.category-card:hover .category-card-link {
+    color: #c45500;
+    text-decoration: underline;
+}
+
+.category-card-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #0f1111;
+}
+
+.category-card-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.category-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-card-link {
+    font-size: 13px;
+    color: #007185;
+}
+
+/* deals section - horizontal scroll */
+.deals-section {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 21px;
+    font-weight: 700;
+    color: #0f1111;
+    margin-bottom: 14px;
+}
+
+.deals-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+}
+
+.deals-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.deals-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.deals-scroll .product-card {
+    min-width: 200px;
+    max-width: 200px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+}
+
+/* best sellers grid */
+.section-banner {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.product-grid-home {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+/* loading */
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    font-size: 18px;
+    color: #565959;
+}
+
+/* responsive */
+@media (max-width: 1024px) {
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .product-grid-home {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-grid-home {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-banner {
+        height: 220px;
+    }
+
+    .home-content {
+        margin-top: -120px;
+    }
+
+    .category-card-title {
+        font-size: 17px;
+    }
+
+    .category-card-image {
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .product-grid-home {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .category-card {
+        padding: 14px;
+    }
+
+    .category-card-title {
+        font-size: 15px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,98 @@
+/* =============================================
+   FOOTER - Amazon-style dark footer
+   ============================================= */
+
+.footer {
+    margin-top: auto;
+}
+
+/* back to top */
+.back-to-top {
+    display: block;
+    width: 100%;
+    background: #37475a;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.back-to-top:hover {
+    background: #485769;
+}
+
+/* links grid */
+.footer-links {
+    background: #232f3e;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-column h4 {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.footer-column a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-column a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+/* bottom bar */
+.footer-bottom {
+    background: #131a22;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 30px 20px;
+}
+
+.footer-logo-bottom .logo-text {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.footer-logo-bottom .logo-in {
+    color: #ff9900;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.footer-copyright {
+    color: #999;
+    font-size: 12px;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .footer-links {
+        gap: 30px;
+        padding: 30px 16px;
+    }
+
+    .footer-column {
+        min-width: 140px;
+    }
+}

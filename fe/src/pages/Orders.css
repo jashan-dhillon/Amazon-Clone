@@ -1,0 +1,150 @@
+.orders-page {
+    background: #fff;
+    min-height: calc(100vh - 100px);
+    padding: 20px;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.orders-title {
+    font-size: 28px;
+    font-weight: 400;
+    color: #0f1111;
+    margin-bottom: 16px;
+}
+
+.orders-empty {
+    text-align: center;
+    padding: 40px;
+}
+
+.orders-empty h3 {
+    font-size: 20px;
+    color: #0f1111;
+    margin-bottom: 8px;
+}
+
+.orders-empty p {
+    color: #565959;
+    margin-bottom: 16px;
+}
+
+.start-shopping-btn {
+    display: inline-block;
+    background: #ffd814;
+    border: 1px solid #fcd200;
+    border-radius: 20px;
+    padding: 10px 30px;
+    text-decoration: none;
+    color: #0f1111;
+    font-size: 14px;
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.order-card {
+    border: 1px solid #d5d9d9;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.order-card-header {
+    background: #f0f2f2;
+    padding: 14px 18px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #d5d9d9;
+}
+
+.order-header-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.order-header-right {
+    margin-left: auto;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.header-label {
+    font-size: 11px;
+    color: #565959;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.header-value {
+    font-size: 13px;
+    color: #0f1111;
+}
+
+.order-detail-link {
+    font-size: 13px;
+    color: #007185;
+    text-decoration: none;
+}
+
+.order-detail-link:hover {
+    color: #c45500;
+    text-decoration: underline;
+}
+
+.order-card-body {
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-badge.placed {
+    background: #fef3cd;
+    color: #856404;
+}
+
+.status-badge.shipped {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status-badge.delivered {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.order-item-count {
+    font-size: 14px;
+    color: #565959;
+}
+
+@media (max-width: 600px) {
+    .order-card-header {
+        gap: 12px;
+    }
+
+    .order-header-right {
+        margin-left: 0;
+        text-align: left;
+    }
+}
