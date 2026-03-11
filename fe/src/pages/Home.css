@@ -18,6 +18,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: opacity 0.5s ease;
 }
 
 .hero-gradient {
@@ -25,7 +26,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 180px;
+    height: 200px;
     background: linear-gradient(to bottom, transparent, #e3e6e6);
     pointer-events: none;
 }
@@ -35,17 +36,18 @@
     position: absolute;
     top: 0;
     bottom: 50%;
-    width: 50px;
+    width: 55px;
     background: none;
     border: none;
     color: #111;
-    font-size: 48px;
+    font-size: 52px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
     transition: background 0.2s;
+    user-select: none;
 }
 
 .banner-arrow:hover {
@@ -63,7 +65,7 @@
 /* banner dots */
 .banner-dots {
     position: absolute;
-    bottom: 85px;
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -79,11 +81,12 @@
     background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     padding: 0;
-    transition: background 0.2s;
+    transition: all 0.2s;
 }
 
 .banner-dot.active {
     background: #fff;
+    transform: scale(1.2);
 }
 
 /* main content area */
@@ -99,7 +102,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .category-card {
@@ -109,6 +112,11 @@
     color: #0f1111;
     display: flex;
     flex-direction: column;
+    transition: box-shadow 0.2s;
+}
+
+.category-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .category-card:hover .category-card-link {
@@ -131,24 +139,144 @@
     margin-bottom: 10px;
     height: 200px;
     overflow: hidden;
+    border-radius: 4px;
 }
 
 .category-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.category-card:hover .category-card-image img {
+    transform: scale(1.03);
 }
 
 .category-card-link {
     font-size: 13px;
     color: #007185;
+    transition: color 0.15s;
+}
+
+/* sign in card */
+.signin-card {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.signin-card .category-card-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.signin-card-btn {
+    display: inline-block;
+    background: #ffd814;
+    border: 1px solid #fcd200;
+    border-radius: 8px;
+    padding: 10px 40px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #0f1111;
+    font-weight: 500;
+    margin-bottom: 12px;
+    transition: background 0.15s;
+}
+
+.signin-card-btn:hover {
+    background: #f7ca00;
+}
+
+.signin-card-subtext {
+    font-size: 12px;
+    color: #565959;
+}
+
+.signin-card-subtext a {
+    color: #007185;
+    text-decoration: none;
+}
+
+.signin-card-subtext a:hover {
+    text-decoration: underline;
+    color: #c45500;
+}
+
+/* welcome card */
+.welcome-card {
+    padding: 20px;
+}
+
+.welcome-card .category-card-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.welcome-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.welcome-link-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #f0f2f2;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #0f1111;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.welcome-link-item:hover {
+    background: #e3e6e6;
+}
+
+.welcome-emoji {
+    font-size: 20px;
+}
+
+/* deals promo card */
+.deals-card {
+    justify-content: space-between;
+}
+
+.deals-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #cc0c39 0%, #ff6b6b 100%);
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 10px;
+}
+
+.deals-big-text {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.deals-sub-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    margin-top: 4px;
 }
 
 /* deals section - horizontal scroll */
 .deals-section {
     background: #fff;
     padding: 20px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .section-title {
@@ -164,6 +292,7 @@
     overflow-x: auto;
     padding-bottom: 12px;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
 .deals-scroll::-webkit-scrollbar {
@@ -186,7 +315,7 @@
 .section-banner {
     background: #fff;
     padding: 20px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .product-grid-home {
@@ -195,14 +324,61 @@
     gap: 16px;
 }
 
-/* loading */
-.loading-spinner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50vh;
-    font-size: 18px;
-    color: #565959;
+.section-see-more {
+    text-align: center;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+    margin-top: 16px;
+}
+
+.see-more-link {
+    color: #007185;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s;
+}
+
+.see-more-link:hover {
+    color: #c45500;
+    text-decoration: underline;
+}
+
+/* loading skeletons */
+.home-skeleton {
+    padding: 16px;
+}
+
+.skeleton-banner {
+    height: 350px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    margin-bottom: 20px;
+}
+
+.skeleton-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.skeleton-card {
+    height: 320px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 /* responsive */
@@ -212,6 +388,10 @@
     }
 
     .product-grid-home {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .skeleton-cards {
         grid-template-columns: repeat(3, 1fr);
     }
 }
@@ -240,6 +420,14 @@
     .category-card-image {
         height: 150px;
     }
+
+    .skeleton-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skeleton-card {
+        height: 220px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -263,5 +451,9 @@
 
     .section-title {
         font-size: 18px;
+    }
+
+    .deals-big-text {
+        font-size: 22px;
     }
 }

@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiTrash2, FiShoppingCart } from 'react-icons/fi';
 import API from '../utils/api';
+import { useToast } from '../components/Toast';
 import './Wishlist.css';
 
 const Wishlist = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const toast = useToast();
 
     const fetchWishlist = async () => {
         try {
@@ -26,7 +28,7 @@ const Wishlist = () => {
             await API.delete(`/wishlist/${id}`);
             setItems(items.filter(item => item.id !== id));
         } catch (err) {
-            alert('Failed to remove item');
+            toast.error('Failed to remove item');
         }
     };
 
@@ -34,9 +36,9 @@ const Wishlist = () => {
         try {
             await API.post(`/wishlist/${id}/move-to-cart`);
             setItems(items.filter(item => item.id !== id));
-            alert('Moved to cart!');
+            toast.cartSuccess('Moved to cart!');
         } catch (err) {
-            alert('Failed to move to cart');
+            toast.error('Failed to move to cart');
         }
     };
 

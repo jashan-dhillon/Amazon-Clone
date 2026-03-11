@@ -3,6 +3,7 @@ import { FiHeart, FiShoppingCart } from 'react-icons/fi';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from './Toast';
 import API from '../utils/api';
 import './ProductCard.css';
 
@@ -10,13 +11,14 @@ const ProductCard = ({ product }) => {
     const { addToCart } = useCart();
     const { user } = useAuth();
     const navigate = useNavigate();
+    const toast = useToast();
 
     // calculate discount percentage
     const discount = product.original_price
         ? Math.round(((product.original_price - product.price) / product.original_price) * 100)
         : 0;
 
-    // render star ratings
+    // render stars based on rating value
     const renderStars = (rating) => {
         const stars = [];
         const fullStars = Math.floor(rating);
@@ -44,8 +46,9 @@ const ProductCard = ({ product }) => {
         }
         try {
             await addToCart(product.id);
+            toast.cartSuccess(`Added "${product.name.slice(0, 40)}..." to cart`);
         } catch (err) {
-            console.error('add to cart failed:', err);
+            toast.error('Failed to add to cart');
         }
     };
 
@@ -58,9 +61,9 @@ const ProductCard = ({ product }) => {
         }
         try {
             await API.post('/wishlist', { productId: product.id });
-            alert('Added to wishlist!');
+            toast.wishlistSuccess('Added to your Wishlist');
         } catch (err) {
-            console.error('wishlist failed:', err);
+            toast.error('Failed to add to wishlist');
         }
     };
 
@@ -93,25 +96,23 @@ const ProductCard = ({ product }) => {
                     </span>
                 </div>
 
-                {/* price */}
+                {/* price section */}
                 <div className="product-card-price">
                     <span className="price-symbol">₹</span>
                     <span className="price-value">{product.price?.toLocaleString()}</span>
                     {product.original_price && (
-                        <>
-                            <span className="price-original">
-                                M.R.P: <s>₹{product.original_price?.toLocaleString()}</s>
-                            </span>
-                        </>
+                        <span className="price-original">
+                            M.R.P: <s>₹{product.original_price?.toLocaleString()}</s>
+                        </span>
                     )}
                 </div>
 
-                {/* delivery info */}
+                {/* delivery badge */}
                 <p className="product-card-delivery">
                     FREE delivery by <strong>Tomorrow</strong>
                 </p>
 
-                {/* add to cart button */}
+                {/* add to cart */}
                 <button className="add-to-cart-btn" onClick={handleAddToCart}>
                     <FiShoppingCart /> Add to Cart
                 </button>

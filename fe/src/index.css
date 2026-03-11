@@ -1,6 +1,8 @@
 /* =============================================
-   GLOBAL STYLES - base resets and fonts
+   GLOBAL STYLES - base resets, fonts, utilities
    ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 * {
   margin: 0;
@@ -9,7 +11,7 @@
 }
 
 body {
-  font-family: 'Amazon Ember', Arial, sans-serif;
+  font-family: 'Inter', 'Amazon Ember', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #eaeded;
@@ -30,6 +32,27 @@ img {
   display: block;
 }
 
+/* smooth page transitions */
+.main-content {
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.85;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* selections */
+::selection {
+  background: #ffd814;
+  color: #0f1111;
+}
+
 /* scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
@@ -47,4 +70,14 @@ img {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a1a1a1;
+}
+
+/* loading spinner used across pages */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  font-size: 16px;
+  color: #565959;
 }

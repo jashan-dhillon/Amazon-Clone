@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
-import { FiHeart, FiShoppingCart, FiCheck, FiTruck } from 'react-icons/fi';
+import { FiHeart, FiShoppingCart, FiCheck, FiTruck, FiShield, FiRefreshCw } from 'react-icons/fi';
 import API from '../utils/api';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../components/Toast';
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -12,11 +13,14 @@ const ProductDetail = () => {
     const navigate = useNavigate();
     const { addToCart } = useCart();
     const { user } = useAuth();
+    const toast = useToast();
 
     const [product, setProduct] = useState(null);
     const [selectedImage, setSelectedImage] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
+    const [isZooming, setIsZooming] = useState(false);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -30,6 +34,7 @@ const ProductDetail = () => {
             }
         };
         fetchProduct();
+        window.scrollTo(0, 0);
     }, [id]);
 
     const discount = product?.original_price
@@ -51,9 +56,9 @@ const ProductDetail = () => {
         if (!user) { navigate('/login'); return; }
         try {
             await addToCart(product.id, quantity);
-            alert('Added to cart!');
+            toast.cartSuccess('Added to your Cart');
         } catch (err) {
-            alert('Failed to add to cart');
+            toast.error('Failed to add to cart');
         }
     };
 
@@ -63,7 +68,7 @@ const ProductDetail = () => {
             await addToCart(product.id, quantity);
             navigate('/cart');
         } catch (err) {
-            alert('Something went wrong');
+            toast.error('Something went wrong');
         }
     };
 
@@ -71,13 +76,38 @@ const ProductDetail = () => {
         if (!user) { navigate('/login'); return; }
         try {
             await API.post('/wishlist', { productId: product.id });
-            alert('Added to wishlist!');
+            toast.wishlistSuccess('Added to your Wishlist');
         } catch (err) {
-            alert('Failed to add to wishlist');
+            toast.error('Failed to add to wishlist');
         }
     };
 
-    if (loading) return <div className="loading-spinner">Loading...</div>;
+    // image zoom on mouse move
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        setZoomPosition({ x, y });
+    };
+
+    if (loading) {
+        return (
+            <div className="pd-loading">
+                <div className="pd-skeleton-container">
+                    <div className="skeleton skeleton-image"></div>
+                    <div className="skeleton-info">
+                        <div className="skeleton skeleton-title"></div>
+                        <div className="skeleton skeleton-rating"></div>
+                        <div className="skeleton skeleton-price"></div>
+                        <div className="skeleton skeleton-desc"></div>
+                        <div className="skeleton skeleton-desc short"></div>
+                    </div>
+                    <div className="skeleton skeleton-buybox"></div>
+                </div>
+            </div>
+        );
+    }
+
     if (!product) return <div className="loading-spinner">Product not found</div>;
 
     const images = product.images?.length > 0
@@ -86,8 +116,17 @@ const ProductDetail = () => {
 
     return (
         <div className="product-detail">
+            {/* breadcrumb */}
+            <div className="pd-breadcrumb">
+                <Link to="/">Home</Link> › <Link to="/products">Products</Link> ›{' '}
+                {product.category_name && (
+                    <><Link to={`/products?category=${product.category_slug}`}>{product.category_name}</Link> › </>
+                )}
+                <span>{product.name.slice(0, 60)}...</span>
+            </div>
+
             <div className="pd-container">
-                {/* left - image gallery */}
+                {/* left side - image gallery */}
                 <div className="pd-images">
                     <div className="pd-thumbnails">
                         {images.map((img, index) => (
@@ -100,10 +139,19 @@ const ProductDetail = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="pd-main-image">
+                    <div
+                        className={`pd-main-image ${isZooming ? 'zooming' : ''}`}
+                        onMouseMove={handleMouseMove}
+                        onMouseEnter={() => setIsZooming(true)}
+                        onMouseLeave={() => setIsZooming(false)}
+                    >
                         <img
                             src={images[selectedImage]?.image_url}
                             alt={product.name}
+                            style={isZooming ? {
+                                transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                                transform: 'scale(2)',
+                            } : {}}
                         />
                     </div>
                 </div>
@@ -113,7 +161,7 @@ const ProductDetail = () => {
                     <h1 className="pd-title">{product.name}</h1>
 
                     <div className="pd-brand">
-                        Brand: <span className="brand-link">{product.brand}</span>
+                        Visit the <span className="brand-link">{product.brand}</span> Store
                     </div>
 
                     <div className="pd-rating">
@@ -125,6 +173,13 @@ const ProductDetail = () => {
                     </div>
 
                     <div className="pd-divider"></div>
+
+                    {/* deal badge */}
+                    {discount >= 30 && (
+                        <div className="pd-deal-badge">
+                            <span className="deal-tag">Limited time deal</span>
+                        </div>
+                    )}
 
                     {/* pricing */}
                     <div className="pd-price-section">
@@ -142,6 +197,33 @@ const ProductDetail = () => {
                         </p>
                     )}
                     <p className="pd-tax">Inclusive of all taxes</p>
+
+                    <div className="pd-divider"></div>
+
+                    {/* key features */}
+                    <div className="pd-features">
+                        <div className="feature-item">
+                            <FiTruck className="feature-icon" />
+                            <div>
+                                <strong>Free Delivery</strong>
+                                <span>On orders over ₹499</span>
+                            </div>
+                        </div>
+                        <div className="feature-item">
+                            <FiRefreshCw className="feature-icon" />
+                            <div>
+                                <strong>7 Day Replacement</strong>
+                                <span>If damaged or defective</span>
+                            </div>
+                        </div>
+                        <div className="feature-item">
+                            <FiShield className="feature-icon" />
+                            <div>
+                                <strong>Amazon Delivered</strong>
+                                <span>Secure transaction</span>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className="pd-divider"></div>
 
@@ -164,11 +246,10 @@ const ProductDetail = () => {
                             <FiTruck className="delivery-truck" />
                             <div>
                                 <p className="delivery-free">FREE delivery</p>
-                                <p className="delivery-date"><strong>Tomorrow</strong></p>
+                                <p className="delivery-date"><strong>Tomorrow, by 9pm</strong></p>
                             </div>
                         </div>
 
-                        {/* stock */}
                         <p className={`buy-stock ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}`}>
                             {product.stock > 0 ? (
                                 <><FiCheck /> In stock</>
@@ -179,7 +260,6 @@ const ProductDetail = () => {
 
                         {product.stock > 0 && (
                             <>
-                                {/* quantity selector */}
                                 <div className="buy-quantity">
                                     <label>Qty:</label>
                                     <select
@@ -195,9 +275,8 @@ const ProductDetail = () => {
                                     </select>
                                 </div>
 
-                                {/* action buttons */}
                                 <button className="buy-add-cart" onClick={handleAddToCart}>
-                                    <FiShoppingCart /> Add to Cart
+                                    Add to Cart
                                 </button>
                                 <button className="buy-now" onClick={handleBuyNow}>
                                     Buy Now
@@ -208,6 +287,12 @@ const ProductDetail = () => {
                         <button className="buy-wishlist" onClick={handleWishlist}>
                             <FiHeart /> Add to Wishlist
                         </button>
+
+                        {/* secure transaction info */}
+                        <div className="buy-secure">
+                            <FiShield />
+                            <span>Secure transaction</span>
+                        </div>
                     </div>
                 </div>
             </div>

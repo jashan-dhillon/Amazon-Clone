@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../utils/api';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../components/Toast';
 import './Checkout.css';
 
 const Checkout = () => {
     const navigate = useNavigate();
     const { cartItems, subtotal, fetchCart } = useCart();
+    const toast = useToast();
     const [addresses, setAddresses] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [showAddressForm, setShowAddressForm] = useState(false);
@@ -44,13 +46,13 @@ const Checkout = () => {
             setShowAddressForm(false);
             setNewAddress({ fullName: '', phone: '', street: '', city: '', state: '', zipCode: '', country: 'India' });
         } catch (err) {
-            alert(err.response?.data?.error || 'failed to add address');
+            toast.error(err.response?.data?.error || 'Failed to add address');
         }
     };
 
     const handlePlaceOrder = async () => {
         if (!selectedAddress) {
-            alert('Please select a shipping address');
+            toast.error('Please select a shipping address');
             return;
         }
         setPlacing(true);
@@ -62,7 +64,7 @@ const Checkout = () => {
             await fetchCart();
             navigate(`/order-confirmation/${res.data.order.id}`);
         } catch (err) {
-            alert(err.response?.data?.error || 'failed to place order');
+            toast.error(err.response?.data?.error || 'Failed to place order');
         } finally {
             setPlacing(false);
         }
