@@ -33,7 +33,7 @@ const signup = async (req, res) => {
         // create a JWT token so the user is automatically logged in after signup
         const token = jwt.sign(
             { id: user.id, email: user.email, name: user.name },
-            process.env.JWT_SECRET,
+            process.env.JWT_SECRET || 'amazon_clone_super_secret_for_evaluators',
             { expiresIn: '7d' }  // token valid for 7 days
         );
 
@@ -74,7 +74,7 @@ const login = async (req, res) => {
         // create a JWT token
         const token = jwt.sign(
             { id: user.id, email: user.email, name: user.name },
-            process.env.JWT_SECRET,
+            process.env.JWT_SECRET || 'amazon_clone_super_secret_for_evaluators',
             { expiresIn: '7d' }
         );
 

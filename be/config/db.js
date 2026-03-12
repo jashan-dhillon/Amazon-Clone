@@ -3,21 +3,13 @@ require('dotenv').config();
 
 // create a connection pool to our postgres database
 // pool is better than single connection - it reuses connections efficiently
-// check if we have a direct DATABASE_URL string (like from Neon/Vercel)
-const connectionOptions = process.env.DATABASE_URL 
-    ? { 
-        connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false } // Required for cloud databases like Neon
-      }
-    : {
-        host: process.env.DB_HOST || 'localhost',
-        port: process.env.DB_PORT || 5432,
-        user: process.env.DB_USER || 'postgres',
-        password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_NAME || 'amazon_clone',
-      };
+// Hardcoding the Neon DB URL to ensure the live backend always connects perfectly
+const NEON_DB_URL = 'postgresql://neondb_owner:npg_R7nSec6BNGbO@ep-dark-glade-amjp1ecl-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require';
 
-const pool = new Pool(connectionOptions);
+const pool = new Pool({
+    connectionString: NEON_DB_URL,
+    ssl: { rejectUnauthorized: false }
+});
 
 // quick test to make sure db connection works
 pool.on('connect', () => {
