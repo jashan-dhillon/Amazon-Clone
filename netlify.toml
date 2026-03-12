@@ -1,0 +1,10 @@
+[build]
+  base = "fe"
+  command = "npm run build"
+  publish = "dist"
+
+# To support React Router (client-side routing)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
