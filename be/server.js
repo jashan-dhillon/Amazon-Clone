@@ -22,14 +22,19 @@ app.use('/api/wishlist', require('./routes/wishlist'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/addresses', require('./routes/addresses'));
 
-// start the server
-app.listen(PORT, () => {
-    console.log(`server running on http://localhost:${PORT}`);
-    console.log('available routes:');
-    console.log('  /api/auth      - signup, login, profile');
-    console.log('  /api/products  - browse and search products');
-    console.log('  /api/cart      - manage cart items');
-    console.log('  /api/wishlist  - manage wishlist');
-    console.log('  /api/orders    - place and view orders');
-    console.log('  /api/addresses - manage shipping addresses');
-});
+// start the server if not running in production/serverless mode
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`server running on http://localhost:${PORT}`);
+        console.log('available routes:');
+        console.log('  /api/auth      - signup, login, profile');
+        console.log('  /api/products  - browse and search products');
+        console.log('  /api/cart      - manage cart items');
+        console.log('  /api/wishlist  - manage wishlist');
+        console.log('  /api/orders    - place and view orders');
+        console.log('  /api/addresses - manage shipping addresses');
+    });
+}
+
+// export the app for Vercel
+module.exports = app;
