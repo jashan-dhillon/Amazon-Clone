@@ -45,6 +45,15 @@ const Login = () => {
 
                 {error && <p className="login-error">{error}</p>}
 
+                {/* For Evaluators to know the default login */}
+                {!isSignup && (
+                    <div style={{ background: '#f0f2f2', padding: '10px', borderRadius: '4px', marginBottom: '15px', fontSize: '13px', border: '1px solid #d5d9d9' }}>
+                        <strong>Test Account for Evaluators:</strong><br/>
+                        Email: <b>jashan@example.com</b><br/>
+                        Password: <b>password123</b>
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit}>
                     {isSignup && (
                         <div className="form-group">
