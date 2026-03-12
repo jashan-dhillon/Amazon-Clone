@@ -14,6 +14,11 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'server is up and running' });
 });
 
+// root route so Vercel doesn't show "Cannot GET /"
+app.get('/', (req, res) => {
+    res.json({ message: 'Amazon Clone API is running live! 🚀' });
+});
+
 // connect all our API routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/products', require('./routes/products'));
