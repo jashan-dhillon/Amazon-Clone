@@ -93,6 +93,113 @@ The database has 9 tables covering users, products, cart, wishlist, and orders. 
 
 Key tables: `users`, `products`, `categories`, `cart_items`, `wishlist_items`, `orders`, `order_items`, `addresses`, `product_images`
 
+### users
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| name | VARCHAR(100) | NOT NULL |
+| email | VARCHAR(150) | UNIQUE, NOT NULL |
+| password | VARCHAR(255) | NOT NULL |
+| avatar_url | VARCHAR(500) | |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+
+### addresses
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| user_id | INT | REFERENCES users(id) ON DELETE CASCADE |
+| full_name | VARCHAR(100) | NOT NULL |
+| phone | VARCHAR(15) | NOT NULL |
+| street | VARCHAR(255) | NOT NULL |
+| city | VARCHAR(100) | NOT NULL |
+| state | VARCHAR(100) | NOT NULL |
+| zip_code | VARCHAR(10) | NOT NULL |
+| country | VARCHAR(50) | DEFAULT 'India' |
+| is_default | BOOLEAN | DEFAULT FALSE |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+
+### categories
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| name | VARCHAR(100) | UNIQUE, NOT NULL |
+| slug | VARCHAR(100) | UNIQUE, NOT NULL |
+| image_url | VARCHAR(500) | |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+
+### products
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| name | VARCHAR(300) | NOT NULL |
+| description | TEXT | |
+| price | DECIMAL(10,2) | NOT NULL |
+| original_price | DECIMAL(10,2) | |
+| stock | INT | DEFAULT 0 |
+| category_id | INT | REFERENCES categories(id) ON DELETE SET NULL |
+| brand | VARCHAR(100) | |
+| rating | DECIMAL(2,1) | DEFAULT 0 |
+| num_reviews | INT | DEFAULT 0 |
+| is_featured | BOOLEAN | DEFAULT FALSE |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+
+### product_images
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| product_id | INT | REFERENCES products(id) ON DELETE CASCADE |
+| image_url | VARCHAR(500) | NOT NULL |
+| is_primary | BOOLEAN | DEFAULT FALSE |
+| sort_order | INT | DEFAULT 0 |
+
+### cart_items
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| user_id | INT | REFERENCES users(id) ON DELETE CASCADE |
+| product_id | INT | REFERENCES products(id) ON DELETE CASCADE |
+| quantity | INT | DEFAULT 1 CHECK (quantity > 0) |
+| added_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+| unique(user_id, product_id) | | |
+
+### wishlist_items
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| user_id | INT | REFERENCES users(id) ON DELETE CASCADE |
+| product_id | INT | REFERENCES products(id) ON DELETE CASCADE |
+| added_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+| unique(user_id, product_id) | | |
+
+### orders
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| user_id | INT | REFERENCES users(id) ON DELETE CASCADE |
+| address_id | INT | REFERENCES addresses(id) ON DELETE SET NULL |
+| total_amount | DECIMAL(10,2) | NOT NULL |
+| status | VARCHAR(30) | DEFAULT 'placed' |
+| payment_method | VARCHAR(50) | DEFAULT 'cod' |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+
+### order_items
+
+| Column | Type | Constraints |
+|------|------|-------------|
+| id | SERIAL | PRIMARY KEY |
+| order_id | INT | REFERENCES orders(id) ON DELETE CASCADE |
+| product_id | INT | REFERENCES products(id) ON DELETE SET NULL |
+| quantity | INT | NOT NULL CHECK (quantity > 0) |
+| price_at_purchase | DECIMAL(10,2) | NOT NULL |
+
 ## Assumptions
 
 - A default user is assumed to be logged in for quick testing
