@@ -99,7 +99,7 @@ Key tables: `users`, `products`, `categories`, `cart_items`, `wishlist_items`, `
 - Sample products are seeded across multiple categories
 - Payments are simulated (no real payment gateway)
 - Prices are in INR (₹)
+- Only seeded products can be searched
+- mock login credentials are - Email: jashan@example.com
+Password: password123
 
-## Status
-
-🚧 Work in progress - building step by step
